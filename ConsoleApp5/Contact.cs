@@ -10,6 +10,6 @@ namespace ConsoleApp5
     {
         public string Adress { get; set; }
         public List<string> Email { get; set;}
-        public List<double> PhoneNamber { get; set; }
+        public List<string> PhoneNamber { get; set; }
     }
 }

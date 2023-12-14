@@ -26,34 +26,21 @@ namespace ConsoleApp5
             people.LastName = Console.ReadLine();
             Console.WriteLine("Ввести возраст");
             people.Age = Int32.Parse(Console.ReadLine());
-
             Console.WriteLine("Введите дату рождения");
             people.DataBith = Int32.Parse(Console.ReadLine());
-
             Console.WriteLine("Введите адресс");
             contact.Adress = Console.ReadLine();
-
             Console.WriteLine("Введите Email");
-            contact.Email = new List<string>
-            {
-                Console.ReadLine()
-            };
+            contact.Email = new List<string>{Console.ReadLine()};
             var emailist = string.Join(",", contact.Email);
-
             Console.WriteLine("Введите номер тефонф");
-            contact.PhoneNamber = new List<double> {  double.Parse(Console.ReadLine()) };
-            double[] doubles = contact.PhoneNamber.ToArray();
-            var phone = string.Join(",", doubles);
-
-            string sqlExpression = $"INSERT INTO Users (Name,Age,LastName,FerstName,DataBith,Adres,Email,PhoneNumber) VALUES ('{nametest}',{people.Age},'{people.LastName}','{people.FerstName}',{people.DataBith},'{contact.Adress}','{emailist}',{phone})";
+            contact.PhoneNamber = new List<string>{Console.ReadLine()};
+            var phonelist = string.Join (",", contact.PhoneNamber);
+            string sqlExpression = $"INSERT INTO Users (Name,Age,LastName,FerstName,DataBith,Adres,Email,PhoneNumber) VALUES ('{nametest}',{people.Age},'{people.LastName}','{people.FerstName}',{people.DataBith},'{contact.Adress}','{emailist}',{phonelist})";
             using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\arhan\source\repos\dbtest\dbtest\testdb.mdf;Integrated Security=True"))
             {
-
                 await connection.OpenAsync();
                 SqlCommand command = new SqlCommand(sqlExpression,connection);
-
-
-
                 SqlParameter lastnamepametr = new SqlParameter("@lastname", people.LastName);
                 command.Parameters.Add(lastnamepametr);
                 SqlParameter ageparametr = new SqlParameter("@age",people.Age);
@@ -68,16 +55,12 @@ namespace ConsoleApp5
                 command.Parameters.Add(adressParametr);
                 SqlParameter emailParametr = new SqlParameter("@email",emailist);
                 command.Parameters.Add(emailParametr);
-                SqlParameter phoneParametr = new SqlParameter("@phonenamber", phone);
+                SqlParameter phoneParametr = new SqlParameter("@phonenamber", phonelist);
                 command.Parameters.Add(phoneParametr);
-
-
-
                 int number = await command.ExecuteNonQueryAsync();
                 Console.WriteLine($"Добавлено объектов: {number}");
                 Console.WriteLine("Подключение закрыто");
             }
-            
             Console.Read();
         }
     }
